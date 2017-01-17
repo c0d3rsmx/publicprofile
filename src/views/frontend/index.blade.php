@@ -340,8 +340,6 @@
     <script>
         var socket = io('{{ env('APP_URL') }}:3000');
         var public_profile_id = '{{ $profile->id }}';
-
-
         var vue = new Vue({
             el: '#app',
             data: {
@@ -352,7 +350,8 @@
                 guest_auth: '',
                 temp_feedback: '',
                 channel: 'channel_'+ public_profile_id,
-                channel_feedback : 'feedback_'+ public_profile_id
+                channel_feedback : 'feedback_'+ public_profile_id,
+                registered: false
             },
             ready: function () {
                 socket.emit('channel', this.channel);
@@ -377,10 +376,14 @@
                     };
                     this.$http.post('{{ route('frontend_profile_get_posts') }}', data, function (data, status, request) {
                        this.$set('posts', data)
-//                      Posts
-                        this.registerChannel();
-//                      Feedbacks
-                        this.registerChannelFeed();
+                        if( data != null || data != '') {
+                           if(!this.registered) {
+                               /* Subscription */
+                               this.registerChannel();
+                               this.registerChannelFeed();
+                               this.registered = true;
+                           }
+                        }
                     }).error(function (data, status, request) {
                     });
                 },
