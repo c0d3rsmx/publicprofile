@@ -20,7 +20,8 @@ class PublicProfileServiceProvider extends ServiceProvider
             __DIR__.'/../routes' => base_path('routes'),
             __DIR__.'/../Controllers' => base_path('app/Http/Controllers'),
         ]);
-        $this->loadViewsFrom(base_path('resources/views/so2platform/publicprofile'), 'publicprofile');
+        $this->loadViewsFrom(__DIR__.'/../views', 'publicprofile');
+//        $this->loadViewsFrom(base_path('resources/views/so2platform/publicprofile'), 'publicprofile');
         if(file_exists(base_path('routes/publicprofile.php'))) {
             $this->loadRoutesFrom(base_path('routes/publicprofile.php'));
         }
