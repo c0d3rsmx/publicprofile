@@ -38,6 +38,11 @@
             height: 180px;
             margin-left: -15px!important;
         }
+        .profile-image-small {
+            text-align: center;
+            width: 50px;
+            height: 50px;
+        }
         .profile-name {
             font-size: 26px;
         }
@@ -88,8 +93,6 @@
                 font-size: 32px;
             }
         }
-
-
 
 
         .post-main-container {
@@ -157,12 +160,88 @@
             margin-top: 15px;
             resize: none;
         }
+
+
+        .top-profile {
+            z-index: 10;
+            /*background-color: darkblue;*/
+        }
+        .top-profile-content {
+            width: 100%;
+            min-height: 50px;
+            color: #fff;
+            padding: 5px;
+        }
+
+
+        .animate-in{
+            animation: getin ease 1s;
+            animation-iteration-count: 1;
+            transform-origin: 50% 50%;
+            animation-fill-mode:forwards; /*when the spec is finished*/
+            -webkit-animation: getin ease 1s;
+            -webkit-animation-iteration-count: 1;
+            -webkit-transform-origin: 50% 50%;
+            -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+            -moz-animation: getin ease 1s;
+            -moz-animation-iteration-count: 1;
+            -moz-transform-origin: 50% 50%;
+            -moz-animation-fill-mode:forwards; /*FF 5+*/
+            -o-animation: getin ease 1s;
+            -o-animation-iteration-count: 1;
+            -o-transform-origin: 50% 50%;
+            -o-animation-fill-mode:forwards; /*Not implemented yet*/
+        }
+
+
+        @keyframes getin{
+            0% {
+                opacity:0;
+                transform:  translate(0px,-25px);
+            }
+            100% {
+                opacity:1;
+                transform:  translate(0px,0px);
+            }
+        }
+        @-moz-keyframes getin{
+            0% {
+                opacity:0;
+                -moz-transform:  translate(0px,-25px);
+            }
+            100% {
+                opacity:1;
+                -moz-transform:  translate(0px,0px);
+            }
+        }
+        @-webkit-keyframes getin {
+            0% {
+                opacity:0;
+                -webkit-transform:  translate(0px,-25px);
+            }
+            100% {
+                opacity:1;
+                -webkit-transform:  translate(0px,0px);
+            }
+        }
+        @-o-keyframes getin {
+            0% {
+                opacity:0;
+                -o-transform:  translate(0px,-25px);
+            }
+            100% {
+                opacity:1;
+                -o-transform:  translate(0px,0px);
+            }
+        }
+
     </style>
 
 
     <div class="container-fluid" id="app">
+
         <div class="row">
-            <div class="cover-image col-xs-12">
+            <div class="cover-image col-xs-12 top-profile-big">
                 <div class="profile-image-container col-xs-4 col-xs-offset-4 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0">
                     <img class="profile-image img-thumbnail" src="{{ $profile->profile_image }}">
                 </div>
@@ -172,7 +251,22 @@
                     <div style="color: white; font-size: 14px">{{ $profile->phone }}</div>
                 </div>
             </div>
+
+            <div class="col-xs-12 top-profile">
+                <div class="col-md-12 top-profile-content" hidden>
+                   <div class="row">
+                       <div class="col-xs-12">
+                           <img class="profile-image-small img-thumbnail" src="{{ $profile->profile_image }}">
+                           &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->name }} {{ $profile->lastname }}</span>
+                           &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->email }}</span>
+                           &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->phone }}</span>
+                       </div>
+                   </div>
+                </div>
+            </div>
+
         </div>
+
         <div class="row">
             <div class="container-fluid">
                 <div class="col-md-8 post-main-container">
@@ -336,8 +430,28 @@
                 }
             }
         });
+    </script>
+    <script>
 
+        $('.top-profile').affix({
+            offset: {
+                top: 400,
+                bottom: function () {
+                    return (this.bottom = $('.footer').outerHeight(true))
+                }
+            }
+        })
+        $('.top-profile').on('affix.bs.affix', function () {
+            $('.top-profile-content').show();
+            $('.top-profile').css('background-color','#3498db')
+            $('.top-profile').addClass('animate-in')
+        })
 
+        $('.top-profile').on('affix-top.bs.affix', function () {
+            $('.top-profile-content').hide();
+            $('.top-profile').css('background-color','transparent')
+            $('.top-profile').removeClass('animate-in')
+        })
     </script>
 
 @endsection
