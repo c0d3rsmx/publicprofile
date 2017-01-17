@@ -18,6 +18,9 @@ Route::post( 'profile/posts/store', 'So2platform\Publicprofile\Controllers\Backe
 Route::get( 'profile/create', 'So2platform\Publicprofile\Controllers\Backend\ProfileController@create' )->name('backend_profile_create');
 Route::post( 'profile/store', 'So2platform\Publicprofile\Controllers\Backend\ProfileController@store' )->name('backend_profile_store');
 
+Route::get( 'profile/edit/{profile_id}', 'So2platform\Publicprofile\Controllers\Backend\ProfileController@edit' )->name('backend_profile_edit');
+Route::post( 'profile/update', 'So2platform\Publicprofile\Controllers\Backend\ProfileController@update' )->name('backend_profile_update');
+
 Route::get( 'profile/feedbacks', 'So2platform\Publicprofile\Controllers\Backend\FeedbackController@index' )->name('backend_profile_feedbacks');
 Route::get( 'profile/feedbacks/enable/{feedback_id}', 'So2platform\Publicprofile\Controllers\Backend\FeedbackController@update' )->name('backend_profile_feedbacks_enable');
 Route::get( 'profile/feedbacks/destroy/{feedback_id}', 'So2platform\Publicprofile\Controllers\Backend\FeedbackController@destroy' )->name('backend_profile_feedbacks_destroy');

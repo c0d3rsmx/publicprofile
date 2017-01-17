@@ -167,7 +167,9 @@
                     <img class="profile-image img-thumbnail" src="{{ $profile->profile_image }}">
                 </div>
                 <div class="profile-name col-xs-12 col-sm-10 col-md-10">
-                    <div style="color: white">ese we</div>
+                    <div style="color: white">{{ $profile->name }} {{ $profile->lastname }}</div>
+                    <div style="color: white; font-size: 14px">{{ $profile->email }}</div>
+                    <div style="color: white; font-size: 14px">{{ $profile->phone }}</div>
                 </div>
             </div>
         </div>
@@ -204,7 +206,7 @@
                                         <label for="email">Email address</label>
                                         <input v-model="guest_email" type="email" class="form-control" id="email" placeholder="Email">
                                     </div>
-                                    <a v-if="guest_nickname != '' && guest_email != ''" type="submit" v-on:click="registerGuest()" class="btn btn-success">Access</a>
+                                    <a v-if="guest_nickname != '' && guest_email != ''" style="width: 100%;" type="submit" v-on:click="registerGuest()" class="btn btn-success">Access</a>
                                 </form>
                             </div>
 
