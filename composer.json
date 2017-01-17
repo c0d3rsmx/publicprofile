@@ -1,7 +1,7 @@
 {
     "name": "so2platform/publicprofile",
     "description": "Public Profile for Laravel 5.3",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "type": "project",
     "repositories": [{
         "type": "vcs",
