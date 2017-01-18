@@ -75,7 +75,7 @@ class PostController extends Controller
                         return back()->withErrors([$check]);
                     }
                     $name = $imageup->s3Upload($request->post_image, 'public/publicprofiles');
-                    $post->image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/" . $name;
+                    $post->image = "https://".env('S3_BUCKET').".s3.amazonaws.com/public/publicprofiles/" . $name;
                 }
             }
             $post->save();
