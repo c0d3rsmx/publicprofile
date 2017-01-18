@@ -8,5 +8,12 @@
         "url": "https://github.com/goetas/serializer.git"
     }],
     "require": {
+        "league/flysystem-aws-s3-v3": "^1.0",
+        "predis/predis": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "So2platform\\Publicprofile\\": "src/"
+        }
     }
 }

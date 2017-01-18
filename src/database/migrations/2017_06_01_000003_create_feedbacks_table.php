@@ -19,7 +19,7 @@ class CreateFeedbacksTable extends Migration
             $table->integer('guest_id');
             $table->text('feedback');
             $table->string('guest_nickname');
-            $table->boolean('status', false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
