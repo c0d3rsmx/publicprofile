@@ -6,7 +6,7 @@
  * Date: 12/19/16
  * Time: 11:53 AM
  */
-namespace So2platform\Publicprofile\Controllers;
+namespace So2platform\Publicprofile\Controllers\PublicProfile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;

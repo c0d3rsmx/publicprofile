@@ -1,6 +1,6 @@
 <?php
 
-namespace So2platform\Publicprofile\Controllers\Backend;
+namespace So2platform\Publicprofile\Controllers\PublicProfile\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
