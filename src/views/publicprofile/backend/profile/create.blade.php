@@ -37,6 +37,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="user_nickname">Profile nickname</label>
+                        <input type="text" class="form-control" id="user_nickname" name="user_nickname"  placeholder="Nickname">
+                    </div>
+
+
+                    <div class="form-group">
                         <label for="user_phone">Phone</label>
                         <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone">
                     </div>

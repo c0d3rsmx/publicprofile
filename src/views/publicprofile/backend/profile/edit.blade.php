@@ -32,6 +32,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="user_nickname">Profile nickname</label>
+                        <input type="text" class="form-control" id="user_nickname" name="user_nickname" value="{{ $profile->nickname }}" placeholder="Nickname">
+                    </div>
+
+                    <div class="form-group">
                         <label for="user_email">Email</label>
                         <input type="text" class="form-control" id="user_email" name="user_email" value="{{ $profile->email }}" placeholder="Email">
                     </div>

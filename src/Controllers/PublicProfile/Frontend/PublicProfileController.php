@@ -20,11 +20,19 @@ class PublicProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($nickname = null)
     {
         /* User your own logic to get the user id */
         $user_id = 1;
-        $profile = PublicProfile::where('user_id',$user_id)->first();
+        /* If request has a nickname then search by nickname */
+        if($nickname != null) {
+            $profile = PublicProfile::where('nickname', $nickname)->first();
+        }else {
+            $profile = PublicProfile::where('user_id', $user_id)->first();
+        }
+        if($profile == null){
+            $profile = PublicProfile::where('user_id', $user_id)->first();
+        }
         return view('publicprofile::frontend.index', array('profile' => $profile));
 
     }

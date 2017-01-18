@@ -32,18 +32,20 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-           'profile_user_id' => 'required',
-           'user_name' => 'required',
-           'user_lastname' => 'required',
-           'user_email' => 'required|email',
-           'user_phone' => 'required',
-           'user_status' => 'required',
+            'profile_user_id' => 'required',
+            'user_name' => 'required',
+            'user_lastname' => 'required',
+            'user_email' => 'required|email',
+            'user_phone' => 'required',
+            'user_status' => 'required',
+            'user_nickname' => 'required',
         ]);
 
         $profile = PublicProfile::create([
             'user_id' => $request->profile_user_id,
             'name' => $request->user_name,
             'lastname' => $request->user_lastname,
+            'nickname' => $request->user_nickname,
             'email' => $request->user_email,
             'phone' => $request->user_phone,
             'status' => $request->user_status == "true" ? true : false
@@ -111,12 +113,14 @@ class ProfileController extends Controller
             'user_email' => 'required|email',
             'user_phone' => 'required',
             'user_status' => 'required',
+            'user_nickname' => 'required',
         ]);
 
         $profile = PublicProfile::find($request->profile_user_id);
 
         $profile->name = $request->user_name;
         $profile->lastname = $request->user_lastname;
+        $profile->nickname = $request->user_nickname;
         $profile->email = $request->user_email;
         $profile->phone =  $request->user_phone;
         $profile->status = $request->user_status == "true" ? true : false;

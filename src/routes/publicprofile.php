@@ -26,7 +26,7 @@ Route::get( 'profile/feedbacks/enable/{feedback_id}', 'So2platform\Publicprofile
 Route::get( 'profile/feedbacks/destroy/{feedback_id}', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\FeedbackController@destroy' )->name('backend_profile_feedbacks_destroy');
 
 /* Frontend routes */
-Route::get( 'profile/index', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@index' )->name('frontend_profile_index');
+Route::get( 'profile/index/{nickname?}', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@index' )->name('frontend_profile_index');
 Route::post( 'profile/get/posts', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@posts' )->name('frontend_profile_get_posts');
 Route::post( 'profile/auth/guest', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@authGuest' )->name('frontend_profile_auth_guest');
 Route::post( 'profile/get/feedbacks', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@getFeedback' )->name('frontend_profile_get_feedbacks');
