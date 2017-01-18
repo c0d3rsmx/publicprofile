@@ -4,24 +4,8 @@
 
 
   ####How Install
-  1. Run.
- 
- 
-        npm install express ioredis socket.io --save
-        #Or if using yarn : yarn add express ioredis socket.io --save
-  2. Run.
-  
-  
-        composer require predis/predis
-        composer require league/flysystem-aws-s3-v3 ~1.0
+  1. Add package information to repository section in composer.json
 
-  3. Configure your aws s3 bucket credentials
-  4. At env file change change BROADCAST_DRIVER driver
-  
-  
-        BROADCAST_DRIVER=redis
-        
-  5. Add package information to repository section in composer.json
   
          "require": {
              "so2platform/publicprofile": "*"
@@ -32,6 +16,25 @@
                  "url":"git@gitlab.com:so2platform/publicprofile.git"
              }
          ],
+
+  2. Run.
+ 
+ 
+        npm install express ioredis socket.io --save
+        #Or if using yarn : yarn add express ioredis socket.io --save
+  3. Run.
+  
+  
+        composer require predis/predis
+        composer require league/flysystem-aws-s3-v3 ~1.0
+
+  4. Configure your aws s3 bucket credentials
+  
+  5. At env file change change BROADCAST_DRIVER driver
+  
+  
+        BROADCAST_DRIVER=redis
+        
 
   6. Add package ServiceProvider to conf/app.php <b>providers</b>
      

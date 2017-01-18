@@ -59,7 +59,7 @@ class ProfileController extends Controller
                     return back()->withErrors([$check]);
                 }
                 $name = $imageup->s3Upload($request->user_profile_image, 'public/publicprofiles/profileimages');
-                $profile->profile_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
+                $profile->profile_image = "https://".env('S3_BUCKET').".s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
             }
         }
         if (isset($request->user_cover_image)){
@@ -73,7 +73,7 @@ class ProfileController extends Controller
                     return back()->withErrors([$check]);
                 }
                 $name = $imageup->s3Upload($request->user_cover_image, 'public/publicprofiles/profilecovers');
-                $profile->cover_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
+                $profile->cover_image = "https://".env('S3_BUCKET').".s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
             }
         }
         $profile->save();
@@ -132,7 +132,7 @@ class ProfileController extends Controller
                     return back()->withErrors([$check]);
                 }
                 $name = $imageup->s3Upload($request->user_profile_image, 'public/publicprofiles/profileimages');
-                $profile->profile_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
+                $profile->profile_image = "https://".env('S3_BUCKET').".s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
             }
         }
         if (isset($request->user_cover_image)){
@@ -146,7 +146,7 @@ class ProfileController extends Controller
                     return back()->withErrors([$check]);
                 }
                 $name = $imageup->s3Upload($request->user_cover_image, 'public/publicprofiles/profilecovers');
-                $profile->cover_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
+                $profile->cover_image = "https://".env('S3_BUCKET').".s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
             }
         }
         $profile->save();
