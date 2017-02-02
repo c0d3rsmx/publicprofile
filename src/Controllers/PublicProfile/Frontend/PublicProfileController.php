@@ -22,8 +22,16 @@ class PublicProfileController extends Controller
      */
     public function index($nickname = null)
     {
-        /* User your own logic to get the user id */
-        $user_id = 1;
+
+        /* If there's a active session then get the id from it. */
+        if(!empty(auth(config('publicprofile.auth_guard'))->user())){
+            // Change session id name.
+            $user_id = auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')];
+        }else{
+            /* Use your own logic to set the user id to the new post */
+            $user_id = config('publicprofile.default_auth_model_id'); // test id.
+        }
+
         /* If request has a nickname then search by nickname */
         if($nickname != null) {
             $profile = PublicProfile::where('nickname', $nickname)->first();
@@ -31,8 +39,9 @@ class PublicProfileController extends Controller
             $profile = PublicProfile::where('user_id', $user_id)->first();
         }
         if($profile == null){
-            $profile = PublicProfile::where('user_id', $user_id)->first();
+            return redirect("/");
         }
+
         return view('publicprofile::frontend.index', array('profile' => $profile));
 
     }
@@ -43,11 +52,9 @@ class PublicProfileController extends Controller
      */
     public function posts(Request $request)
     {
-
         $this->validate($request, [
             'public_profile_id' => 'required',
         ]);
-
         /* User your own logic to get the user id */
         $public_profile_id = $request->public_profile_id;
         $posts = Post::orderBy('created_at', 'desc')->where('public_profile_id', $public_profile_id)->get();
@@ -59,8 +66,6 @@ class PublicProfileController extends Controller
             $pp->since = $timeformatter->time_ago(strtotime($p->created_at));
             $procesed_posts[] = $pp;
         }
-
-
         return json_encode($procesed_posts);
 
     }
@@ -72,12 +77,10 @@ class PublicProfileController extends Controller
      */
     public function authGuest(Request $request)
     {
-
         $this->validate($request, [
             'nickname' => 'required',
             'email' => 'required'
         ]);
-
         $guest = Guest::where('email', $request->email)->first();
         if($guest == null){
             $guest = Guest::create([
@@ -104,7 +107,6 @@ class PublicProfileController extends Controller
         $this->validate($request, [
             'public_profile_id' => 'required',
         ]);
-
         $profile_feedbacks = ProfileFeedback::where('public_profile_id', $request->public_profile_id)->first();
         if($profile_feedbacks == null){
             $profile_feedbacks = ProfileFeedback::create([

@@ -65,5 +65,24 @@
 
 
         node vendor/so2platform/publicprofile/socket.js
-    
-  12. Now you've installed the Public Profiles App.
+      
+  12. Configure auth model, model primary id and s3 settings in config/publicprofile.php
+  
+       
+        'default_auth_model_id' => 1,
+           'default_public_profile_id' => 1,
+           'auth_model_key' => "user_id",
+           'auth_guard' => "web",
+       
+           /* S3 Config */
+           's3_public_profile' => [
+               'S3_KEY' => '',
+               'S3_SECRET' => '',
+               'S3_REGION' => '',
+               'S3_BUCKET' => 'https://bucket.s3.amazonaws.com/', 
+               'S3_BUCKET_POSTS_DIRECTORY' => '',  // With slash at end.
+               'S3_BUCKET_IMAGES_DIRECTORY' => '',  // With slash at end.
+               'S3_BUCKET_COVER_DIRECTORY' => '',  // With slash at end.
+           ]
+  
+  13. Now you've installed the Public Profiles App.

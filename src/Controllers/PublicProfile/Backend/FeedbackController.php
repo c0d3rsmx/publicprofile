@@ -10,6 +10,7 @@ use So2platform\Publicprofile\Helpers\imageUpload;
 use So2platform\Publicprofile\Models\Feedback;
 use So2platform\Publicprofile\Models\Post;
 use So2platform\Publicprofile\Models\ProfileFeedback;
+use So2platform\Publicprofile\Models\PublicProfile;
 
 class FeedbackController extends Controller
 {
@@ -20,18 +21,34 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        /* Use your own logic to set the user id to the new post */
-        $public_profile_id = 1;
-        $profile_feedback = ProfileFeedback::where('public_profile_id', $public_profile_id)->first();
-        $feedbacks = Feedback::where('profile_feedback_id', $profile_feedback->id)->get();
-        $data = [
-            'profile_feedback' => $profile_feedback,
-            'feedback' => $feedbacks,
-        ];
-
+        /* If there's a active session then get the id from it. */
+        if(!empty(auth(config('publicprofile.auth_guard'))->user())){
+            // Change session id name.
+            $user_id = auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')];
+        }else{
+            /* Use your own logic to set the user id to the new post */
+            $user_id = config('publicprofile.default_auth_model_id'); // test id.
+        }
+        /* Get public profile with the session user_id */
+        $public_profile = PublicProfile::where('user_id', $user_id)->first();
+        if(!empty($public_profile)) {
+            $profile_feedback = ProfileFeedback::where('public_profile_id', $public_profile->id)->first();
+        }
+        if(!empty($profile_feedback)){
+            $feedbacks = Feedback::where('profile_feedback_id', $profile_feedback->id)->get();
+        }else {
+            return view("publicprofile::backend.layout.error", array(
+                'error' => "
+                        <div>
+                            <h1>Sin perfil</h1>
+                            <a class='btn btn-default' href='".route('backend_profile_create')."'>
+                                Crear
+                            </a>
+                        </div>"
+            ));
+        }
         return view('publicprofile::backend.feedback.index', array(
-            'public_profile_id' => $public_profile_id,
-            'profile_feedbacks' => $data,
+            'profile_feedbacks' => $feedbacks,
         ));
     }
 

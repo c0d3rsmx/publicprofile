@@ -3,12 +3,18 @@
 
 
 @section('content')
+
     <style>
         body {
             background-color: #e9ebee;
         }
         .cover-image {
-            background-image: url({{ $profile->cover_image }});
+            background-image: url(@if($profile->cover_image == "" || $profile->cover_image == null)
+                 '/images/publicprofile/no-cover.png'
+            @else
+                {{ $profile->cover_image }}
+            @endif
+            );
             background-size: cover;
             background-repeat: no-repeat;
             height: auto;
@@ -243,7 +249,11 @@
         <div class="row">
             <div class="cover-image col-xs-12 top-profile-big">
                 <div class="profile-image-container col-xs-4 col-xs-offset-4 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0">
-                    <img class="profile-image img-thumbnail" src="{{ $profile->profile_image }}">
+                    <img class="profile-image img-thumbnail" src="@if($profile->profile_image == '' || $profile->profile_image == null)
+                            /images/publicprofile/no-image.jpg
+                            @else
+                    {{ $profile->profile_image }}
+                    @endif">
                 </div>
                 <div class="profile-name col-xs-12 col-sm-10 col-md-10">
                     <div style="color: white">{{ $profile->name }} {{ $profile->lastname }}</div>
@@ -256,7 +266,11 @@
                 <div class="col-md-12 top-profile-content" hidden>
                    <div class="row">
                        <div class="col-xs-12">
-                           <img class="profile-image-small img-thumbnail" src="{{ $profile->profile_image }}">
+                           <img class="profile-image-small img-thumbnail" src="@if($profile->profile_image == '' || $profile->profile_image == null)
+                                   /images/publicprofile/no-image.jpg
+                                   @else
+                                   {{ $profile->profile_image }}
+                           @endif">
                            &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->name }} {{ $profile->lastname }}</span>
                            &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->email }}</span>
                            &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->phone }}</span>
@@ -274,10 +288,12 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="post-title">@{{ p.title }} <span>@{{ p.since }}</span></div>
-
                             </div>
-                            <div class="row">
+                            <div v-if="p.image != null" class="row">
                                 <img class="post-image" src="@{{ p.image }}">
+                            </div>
+                            <div v-if="p.video != null && p.youtube == true" class="row">
+                                <youtube :player-width="youtube_width" id="youtube" :video-id="p.video"></youtube>
                             </div>
                             <div class="row">
                                 <div class="post-content">@{{ p.content }}</div>
@@ -289,7 +305,6 @@
 
                     <div class="col-md-12 feedback-box">
                         <div class="row">
-{{--                        <pre>@{{ $data | json }}</pre>--}}
                             <div v-if="guest_auth == ''" class="col-md-12">
                                 <form>
                                     <div class="form-group">
@@ -340,6 +355,7 @@
     <script>
         var socket = io('{{ env('APP_URL') }}:3000');
         var public_profile_id = '{{ $profile->id }}';
+        Vue.use(VueYouTubeEmbed)
         var vue = new Vue({
             el: '#app',
             data: {
@@ -351,7 +367,8 @@
                 temp_feedback: '',
                 channel: 'channel_'+ public_profile_id,
                 channel_feedback : 'feedback_'+ public_profile_id,
-                registered: false
+                registered: false,
+                youtube_width: $('#youtube').parent().width()
             },
             ready: function () {
                 socket.emit('channel', this.channel);
@@ -369,6 +386,9 @@
                 }
             },
             methods : {
+                onResize: function () {
+                    this.youtube_width = $('#youtube').parent().width();
+                },
                 getPosts: function () {
                     data = {
                         'public_profile_id' : public_profile_id,
@@ -433,9 +453,11 @@
                 }
             }
         });
+        $(window).resize(function() {
+            vue.onResize();
+        });
     </script>
     <script>
-
         $('.top-profile').affix({
             offset: {
                 top: 400,
@@ -456,5 +478,4 @@
             $('.top-profile').removeClass('animate-in')
         })
     </script>
-
 @endsection

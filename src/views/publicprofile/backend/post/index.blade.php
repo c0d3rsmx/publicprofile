@@ -38,7 +38,8 @@
                     </div>
                     <div v-show="image == ''" class="checkbox">
                         <label>
-                            <input v-model="type" id="post_type" name="post_type" type="checkbox"> Youtube video
+                            <input v-on:click="isYoutube()" id="post_type" type="checkbox"> Youtube video
+                            <input v-model="type" id="post_type" name="post_type" type="hidden">
                         </label>
                     </div>
                     <button type="submit" style="width: 100%" class="btn btn-primary">Post</button>
@@ -56,6 +57,15 @@
                 video: '',
                 image: '',
                 type: false
+            },
+            methods : {
+                isYoutube: function () {
+                    if(!this.type){
+                        this.type = true;
+                    }else {
+                        this.type = false;
+                    }
+                }
             },
             watch : {
                 video: {

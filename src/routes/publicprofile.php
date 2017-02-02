@@ -15,9 +15,9 @@ Route::get('profile/setup', 'So2platform\Publicprofile\Controllers\PublicProfile
 /* Backend routes */
 Route::get( 'profile/post/create', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\PostController@create' )->name('backend_profile_post_create');
 Route::post( 'profile/posts/store', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\PostController@store' )->name('backend_profile_post_store');
+
 Route::get( 'profile/create', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\ProfileController@create' )->name('backend_profile_create');
 Route::post( 'profile/store', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\ProfileController@store' )->name('backend_profile_store');
-
 Route::get( 'profile/edit/{profile_id}', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\ProfileController@edit' )->name('backend_profile_edit');
 Route::post( 'profile/update', 'So2platform\Publicprofile\Controllers\PublicProfile\Backend\ProfileController@update' )->name('backend_profile_update');
 

@@ -14,7 +14,7 @@
                 <th>Actions</th>
             </thead>
             <tbody>
-                @foreach($profile_feedbacks['feedback'] as $pf)
+                @foreach($profile_feedbacks as $pf)
                     <tr>
                     <td>{{ $pf->guest_id }}</td>
                     <td>{{ $pf->guest_nickname }}</td>

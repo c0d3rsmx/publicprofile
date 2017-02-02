@@ -18,8 +18,14 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        /* Use your own logic to set the user id to the new post */
-        $user_id = 1;
+        /* If there's a active session then get the id from it. */
+        if(!empty(auth(config('publicprofile.auth_guard'))->user())){
+            // Change session id name.
+            $user_id = auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')];
+        }else{
+            /* Use your own logic to set the user id to the new post */
+            $user_id = config('publicprofile.default_auth_model_id');
+        }
         return view('publicprofile::backend.profile.create', array('user_id' => $user_id));
 
     }
@@ -60,8 +66,9 @@ class ProfileController extends Controller
                 if($check != null){
                     return back()->withErrors([$check]);
                 }
-                $name = $imageup->s3Upload($request->user_profile_image, 'public/publicprofiles/profileimages');
-                $profile->profile_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
+                $name = $imageup->s3Upload($request->user_profile_image, config('publicprofile.s3_public_profile.S3_BUCKET_IMAGES_DIRECTORY'));
+                $profile->profile_image = config('publicprofile.s3_public_profile.S3_BUCKET').config('publicprofile.s3_public_profile.S3_BUCKET_IMAGES_DIRECTORY'). $name;
+
             }
         }
         if (isset($request->user_cover_image)){
@@ -74,8 +81,9 @@ class ProfileController extends Controller
                 if($check != null){
                     return back()->withErrors([$check]);
                 }
-                $name = $imageup->s3Upload($request->user_cover_image, 'public/publicprofiles/profilecovers');
-                $profile->cover_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
+                $name = $imageup->s3Upload($request->user_cover_image, config('publicprofile.s3_public_profile.S3_BUCKET_COVER_DIRECTORY'));
+                $profile->cover_image = config('publicprofile.s3_public_profile.S3_BUCKET').config('publicprofile.s3_public_profile.S3_BUCKET_COVER_DIRECTORY'). $name;
+
             }
         }
         $profile->save();
@@ -95,6 +103,17 @@ class ProfileController extends Controller
     public function edit($profile_id)
     {
         $profile = PublicProfile::find($profile_id);
+        if(empty($profile)){
+            return view("publicprofile::backend.layout.error", array(
+                'error' => "
+                        <div>
+                            <h1>Sin perfil</h1>
+                            <a class='btn btn-default' href='".route('backend_profile_create')."'>
+                                Crear
+                            </a>
+                        </div>"
+            ));
+        }
         return view('publicprofile::backend.profile.edit', array('profile' => $profile));
     }
 
@@ -135,8 +154,9 @@ class ProfileController extends Controller
                 if($check != null){
                     return back()->withErrors([$check]);
                 }
-                $name = $imageup->s3Upload($request->user_profile_image, 'public/publicprofiles/profileimages');
-                $profile->profile_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profileimages/".$name;
+                $name = $imageup->s3Upload($request->user_profile_image, config('publicprofile.s3_public_profile.S3_BUCKET_IMAGES_DIRECTORY'));
+                $profile->profile_image = config('publicprofile.s3_public_profile.S3_BUCKET').config('publicprofile.s3_public_profile.S3_BUCKET_IMAGES_DIRECTORY'). $name;
+
             }
         }
         if (isset($request->user_cover_image)){
@@ -149,8 +169,8 @@ class ProfileController extends Controller
                 if($check != null){
                     return back()->withErrors([$check]);
                 }
-                $name = $imageup->s3Upload($request->user_cover_image, 'public/publicprofiles/profilecovers');
-                $profile->cover_image = "https://dtx7clubcom.s3.amazonaws.com/public/publicprofiles/profilecovers/".$name;
+                $name = $imageup->s3Upload($request->user_cover_image, config('publicprofile.s3_public_profile.S3_BUCKET_COVER_DIRECTORY'));
+                $profile->cover_image = config('publicprofile.s3_public_profile.S3_BUCKET').config('publicprofile.s3_public_profile.S3_BUCKET_COVER_DIRECTORY'). $name;
             }
         }
         $profile->save();
