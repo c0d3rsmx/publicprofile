@@ -26,6 +26,10 @@ class ProfileController extends Controller
             /* Use your own logic to set the user id to the new post */
             $user_id = config('publicprofile.default_auth_model_id');
         }
+        $public_profile = PublicProfile::where('user_id', $user_id)->first();
+        if(!empty($public_profile)){
+            return redirect()->route('backend_profile_edit', array('profile_id', $public_profile->id));
+        }
         return view('publicprofile::backend.profile.create', array('user_id' => $user_id));
 
     }
@@ -132,7 +136,7 @@ class ProfileController extends Controller
             'user_email' => 'required|email',
             'user_phone' => 'required',
             'user_status' => 'required',
-            'user_nickname' => 'required',
+            'user_nickname' => 'required|unique:Public_Profiles,nickname',
         ]);
 
         $profile = PublicProfile::find($request->profile_user_id);

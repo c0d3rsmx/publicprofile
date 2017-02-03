@@ -29,5 +29,5 @@ Route::get( 'profile/feedbacks/destroy/{feedback_id}', 'So2platform\Publicprofil
 Route::get( 'profile/index/{nickname?}', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@index' )->name('frontend_profile_index');
 Route::post( 'profile/get/posts', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@posts' )->name('frontend_profile_get_posts');
 Route::post( 'profile/auth/guest', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@authGuest' )->name('frontend_profile_auth_guest');
-Route::post( 'profile/get/feedbacks', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@getFeedback' )->name('frontend_profile_get_feedbacks');
+Route::get( 'profile/get/feedbacks', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@getFeedback' )->name('frontend_profile_get_feedbacks');
 Route::post( 'profile/new/feedback', 'So2platform\Publicprofile\Controllers\PublicProfile\Frontend\PublicProfileController@newFeedback' )->name('frontend_profile_new_feedbacks');

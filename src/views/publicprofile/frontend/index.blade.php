@@ -3,7 +3,7 @@
 
 
 @section('content')
-
+    <script src="https://so2cloud.s3.amazonaws.com/public/assets/synergyo2corp/youtube/vue-youtube-embed.js"></script>
     <style>
         body {
             background-color: #e9ebee;
@@ -422,7 +422,7 @@
                     data = {
                         'public_profile_id' : public_profile_id
                     };
-                    this.$http.post('{{ route('frontend_profile_get_feedbacks') }}', data, function (data, status, request) {
+                    this.$http.get('{{ route('frontend_profile_get_feedbacks') }}', data, function (data, status, request) {
                         this.$set('profile_feedbacks', data)
                     }).error(function (data, status, request) {
                     });

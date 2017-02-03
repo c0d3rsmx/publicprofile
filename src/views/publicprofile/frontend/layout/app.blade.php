@@ -12,7 +12,6 @@
     <script src="https://so2cloud.s3.amazonaws.com/public/assets/synergyo2corp/bootstrap_3/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="https://so2cloud.s3.amazonaws.com/public/assets/vendor/vuejs/vue.1_0_22.min.js" type="text/javascript"></script>
     <script src="https://so2cloud.s3.amazonaws.com/public/assets/vendor/vuejs/vue-resource.min.js" type="text/javascript"></script>
-    <script src="https://so2cloud.s3.amazonaws.com/public/assets/synergyo2corp/youtube/vue-youtube-embed.js"></script>
     <script src="https://npmcdn.com/vue-select@latest"></script>
 
 
