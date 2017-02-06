@@ -16,6 +16,15 @@ class PublicProfileController extends Controller
 {
 
     /**
+     * Slugify the provided nickname
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function slugifiNick($string){
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
+    }
+
+    /**
      * Show the application index.
      *
      * @return \Illuminate\Http\Response
@@ -31,20 +40,33 @@ class PublicProfileController extends Controller
             /* Use your own logic to set the user id to the new post */
             $user_id = config('publicprofile.default_auth_model_id'); // test id.
         }
-
         /* If request has a nickname then search by nickname */
         if($nickname != null) {
             $profile = PublicProfile::where('nickname', $nickname)->first();
         }else {
-            $profile = PublicProfile::where('user_id', $user_id)->first();
+            $replicate_user_id = session( 'instance.id_cliente' );
+            if(!empty($replicate_user_id)){
+                $user_id = $replicate_user_id;
+            }
+            $profile = PublicProfile::where('user_id',$user_id)->first();
+            if(empty($profile)) {
+                $profile = PublicProfile::first();
+            }
         }
-        if($profile == null){
+        if(empty($profile)){
             return redirect("/");
         }
-
-        return view('publicprofile::frontend.index', array('profile' => $profile));
-
+        $profile_feedbacks = ProfileFeedback::where('public_profile_id', $profile['id'] )->first();
+        if($profile_feedbacks == null){
+            $profile_feedbacks = ProfileFeedback::create([
+                'public_profile_id' => $profile['id'],
+            ]);
+        }
+        $profile_feedbacks['encrypted_id'] = \Crypt::encrypt($profile_feedbacks['id']);
+        $profile['encrypted_id'] = \Crypt::encrypt($profile['id']);
+        return view('publicprofile::frontend.index', ['profile' => $profile, 'profile_feedbacks' => $profile_feedbacks]);
     }
+
     /**
      * Return given user id posts.
      *
@@ -56,7 +78,7 @@ class PublicProfileController extends Controller
             'public_profile_id' => 'required',
         ]);
         /* User your own logic to get the user id */
-        $public_profile_id = $request->public_profile_id;
+        $public_profile_id = \Crypt::decrypt($request->public_profile_id);
         $posts = Post::orderBy('created_at', 'desc')->where('public_profile_id', $public_profile_id)->get();
         $procesed_posts = null;
         $timeformatter =  new TimeFormat();
@@ -82,7 +104,7 @@ class PublicProfileController extends Controller
             'email' => 'required'
         ]);
         $guest = Guest::where('email', $request->email)->first();
-        if($guest == null){
+        if(empty($guest)){
             $guest = Guest::create([
                 'nickname' => $request->nickname,
                 'email' => $request->email,
@@ -107,12 +129,8 @@ class PublicProfileController extends Controller
         $this->validate($request, [
             'public_profile_id' => 'required',
         ]);
-        $profile_feedbacks = ProfileFeedback::where('public_profile_id', $request->public_profile_id)->first();
-        if($profile_feedbacks == null){
-            $profile_feedbacks = ProfileFeedback::create([
-                'public_profile_id' => $request->public_profile_id,
-            ]);
-        }
+        $public_profile_id = \Crypt::decrypt($request->public_profile_id);
+        $profile_feedbacks = ProfileFeedback::where('public_profile_id', $public_profile_id )->first();
         $feedback = Feedback::orderBy('created_at', 'desc')
             ->where('profile_feedback_id', $profile_feedbacks->id)
             ->where('status', true)->get();
@@ -126,9 +144,9 @@ class PublicProfileController extends Controller
             $procesed_feedbacks[] = $pf;
         }
 
-
         $data = [
-            'profile_feedbacks' => $profile_feedbacks,
+            //'profile_feedbacks' => $profile_feedbacks,
+            'encrypted_id' => \Crypt::encrypt($profile_feedbacks['id']),
             'feedbacks' => $procesed_feedbacks,
         ];
 
@@ -147,24 +165,18 @@ class PublicProfileController extends Controller
             'guest_id' => 'required',
             'feedback' => 'required',
         ]);
-
+        $feedback_profile_id = \Crypt::decrypt($request->profile_feedback_id);
         Feedback::create([
-            'profile_feedback_id' => $request->profile_feedback_id,
+            'profile_feedback_id' => $feedback_profile_id,
             'feedback' => $request->feedback,
             'guest_id' => $request->guest_id,
             'guest_nickname' => $request->guest_nickname
         ]);
 
         /* Event goes here */
-        event(new FeedbacksEvent('feedback_'.$request->user_id));
-
+        event(new FeedbacksEvent('feedback_'.$feedback_profile_id));
 
         return json_encode("Success");
     }
-
-
-
-
-
 
 }

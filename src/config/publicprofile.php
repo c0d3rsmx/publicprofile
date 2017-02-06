@@ -7,6 +7,9 @@
  */
 return [
 
+    /* Node server url */
+    'node_server' => 'http://cmsmodule.local:3000',
+
     'default_auth_model_id' => 1,
     'default_public_profile_id' => 1,
     'auth_model_key' => "user_id",

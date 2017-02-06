@@ -1,0 +1,40 @@
+<?php
+
+namespace So2platform\Publicprofile\Controllers\PublicProfile\Backend;
+
+use App\Http\Controllers\Controller;
+
+class BackendBaseController extends Controller
+{
+    protected $authguard;
+    protected $user_authenticated;
+    protected $auth_user_id;
+    protected $missing_profile_html_error;
+    protected $no_feedbacks;
+
+    function __construct(){
+        $this->authguard = config('publicprofile.auth_guard');
+        $this->user_authenticated = auth($this->authguard)->check();
+        $this->auth_user_id = $this->user_authenticated ?
+                auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')] :
+                config('publicprofile.default_auth_model_id') ;
+
+        $this->missing_profile_html_error = "<div class='container'> <h4>Profile missing</h4>
+        <h1>First create your profile</h1>
+        <a class='btn btn-default' href='".route('backend_profile_create')."'> Click here to create it </a> </div>";
+
+        $this->no_feedbacks = "<div class='container'><h1>No comments from your visitors yet</h1></div>";
+
+    }
+
+
+    /**
+     * Slugify the provided nickname
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function slugifiNick($string){
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
+    }
+
+}

@@ -18,7 +18,7 @@ class PublicProfileServiceProvider extends ServiceProvider
             __DIR__.'/../views/publicprofile' => base_path('resources/views/so2platform/publicprofile'),
             __DIR__.'/../database/migrations' => base_path('database/migrations'),
             __DIR__.'/../routes' => base_path('routes'),
-            __DIR__.'/../Controllers/PublicProfile' => base_path('app/Http/Controllers/PublicProfile'),
+//            __DIR__.'/../Controllers/PublicProfile' => base_path('app/Http/Controllers/PublicProfile'),
             __DIR__.'/../config' => base_path('config'),
             __DIR__.'/../resources/images' => base_path('public/images'),
         ]);

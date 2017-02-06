@@ -318,8 +318,8 @@
                                     <a v-if="guest_nickname != '' && guest_email != ''" style="width: 100%;" type="submit" v-on:click="registerGuest()" class="btn btn-success">Access</a>
                                 </form>
                             </div>
-
-                            <div v-if="guest_auth != ''" class="col-md-12">
+                            <div class="col-xs-12" >
+                                <h5 style="margin:0 0 10pt 0;font-weight: bolder;text-align:right;">Previous comments</h5>
                                 <div v-for="f in profile_feedbacks['feedbacks']" class="col-md-12 feedbacks">
                                     <div class="row">
                                         <div class="feedback-header">
@@ -331,6 +331,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div v-if="guest_auth != ''" class="col-md-12">
                                 <div class="col-md-12">
                                     <div class="row">
                                         <form>
@@ -351,10 +353,12 @@
     </div>
 
 
-    <script src="{{ env('APP_URL') }}:3000/socket.io/socket.io.js"></script>
+    <script src="{{ config('publicprofile.node_server') }}/socket.io/socket.io.js"></script>
     <script>
-        var socket = io('{{ env('APP_URL') }}:3000');
-        var public_profile_id = '{{ $profile->id }}';
+        var socket = io('{{ config('publicprofile.node_server') }}');
+    </script>
+    <script>
+        var public_profile_id = '{{ $profile['encrypted_id'] }}';
         Vue.use(VueYouTubeEmbed)
         var vue = new Vue({
             el: '#app',
@@ -365,8 +369,8 @@
                 guest_email: '',
                 guest_auth: '',
                 temp_feedback: '',
-                channel: 'channel_'+ public_profile_id,
-                channel_feedback : 'feedback_'+ public_profile_id,
+                channel: 'channel_{{ $profile['id'] }}',
+                channel_feedback : 'feedback_{{ $profile_feedbacks['id'] }}',
                 registered: false,
                 youtube_width: $('#youtube').parent().width()
             },
