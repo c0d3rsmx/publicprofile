@@ -1,5 +1,5 @@
 # Public Profile for Laravel 5.3
-![Alt text](https://img.shields.io/badge/build-passing%2Fdeveloping-yellowgreen.svg)![Alt text](https://img.shields.io/badge/beta%20version-1.0.0-yellow.svg )
+![Alt text](https://img.shields.io/badge/build-passing%2Fdeveloping-yellowgreen.svg)![Alt text](https://img.shields.io/badge/beta%20version-1.3-yellow.svg )
 ### Synergy O2
 
 

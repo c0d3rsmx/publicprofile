@@ -434,7 +434,7 @@
                 newFeedback: function () {
                     data = {
                         'public_profile_id': public_profile_id,
-                        'profile_feedback_id': this.profile_feedbacks['profile_feedbacks'].id,
+                        'profile_feedback_id': this.profile_feedbacks['encrypted_id'],
                         'guest_id': this.guest_auth.id,
                         'feedback': this.temp_feedback,
                         'guest_nickname': this.guest_auth.nickname,
