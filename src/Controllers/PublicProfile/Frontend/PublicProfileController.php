@@ -16,15 +16,6 @@ class PublicProfileController extends Controller
 {
 
     /**
-     * Slugify the provided nickname
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function slugifiNick($string){
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
-    }
-
-    /**
      * Show the application index.
      *
      * @return \Illuminate\Http\Response
@@ -44,9 +35,13 @@ class PublicProfileController extends Controller
         if($nickname != null) {
             $profile = PublicProfile::where('nickname', $nickname)->first();
         }else {
-            $replicate_user_id = session( 'instance.id_cliente' );
-            if(!empty($replicate_user_id)){
-                $user_id = $replicate_user_id;
+            $public_session_id = session(config('publicprofile.public_session_instance'));
+            if(!empty($public_session_id)){
+                /* Search user profile by finding his nickname in order to get his Id */
+                $user_nickname = PublicProfile::where('user_id',$public_session_id)->first();
+                if(!empty($user_nickname)){
+                    return redirect()->route('frontend_profile_index', array('nickname' => $user_nickname->nickname));
+                }
             }
             $profile = PublicProfile::where('user_id',$user_id)->first();
             if(empty($profile)) {
@@ -72,7 +67,7 @@ class PublicProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function posts(Request $request)
+    protected function posts(Request $request)
     {
         $this->validate($request, [
             'public_profile_id' => 'required',
@@ -97,7 +92,7 @@ class PublicProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function authGuest(Request $request)
+    protected function authGuest(Request $request)
     {
         $this->validate($request, [
             'nickname' => 'required',
@@ -124,7 +119,7 @@ class PublicProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getFeedback(Request $request)
+    protected function getFeedback(Request $request)
     {
         $this->validate($request, [
             'public_profile_id' => 'required',
@@ -158,7 +153,7 @@ class PublicProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function newFeedback(Request $request)
+    protected function newFeedback(Request $request)
     {
         $this->validate($request, [
             'profile_feedback_id' => 'required',

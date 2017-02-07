@@ -3,9 +3,12 @@
 namespace So2platform\Publicprofile\Controllers\PublicProfile\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use So2platform\Publicprofile\Events\PostsEvent;
 use So2platform\Publicprofile\Helpers\imageUpload;
+use So2platform\Publicprofile\Helpers\Slugify;
 use So2platform\Publicprofile\Models\Post;
 use So2platform\Publicprofile\Models\PublicProfile;
 
@@ -16,10 +19,10 @@ class ProfileController extends BackendBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    protected function home()
     {
 
-        return view('vo.my_public_profile');
+        return view(config('publicprofile.backend_home_view'));
     }
 
     /**
@@ -27,7 +30,7 @@ class ProfileController extends BackendBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    protected function create()
     {
         $user_id = $this->auth_user_id;
         $public_profile = PublicProfile::where('user_id', $user_id)->first();
@@ -42,9 +45,9 @@ class ProfileController extends BackendBaseController
     /**
      * Show the application store.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response | RedirectResponse
      */
-    public function store(Request $request)
+    protected function store(Request $request)
     {
         $this->validate($request, [
             'user_name' => 'required',
@@ -54,12 +57,12 @@ class ProfileController extends BackendBaseController
             'user_status' => 'required',
             'user_nickname' => 'required|unique:Public_Profiles,nickname',
         ]);
-
+        $slugify = new Slugify();
         $profile = PublicProfile::create([
             'user_id' => $this->auth_user_id,
             'name' => $request->user_name,
             'lastname' => $request->user_lastname,
-            'nickname' => $this->slugifiNick($request->user_nickname),
+            'nickname' => $slugify->slugString($request->user_nickname),
             'email' => $request->user_email,
             'phone' => $request->user_phone,
             'status' => true
@@ -103,7 +106,7 @@ class ProfileController extends BackendBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    protected function edit()
     {
         $user_id = $this->auth_user_id;
         $profile = PublicProfile::where('user_id', $user_id)->first();
@@ -118,9 +121,9 @@ class ProfileController extends BackendBaseController
     /**
      * Update the application data.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response | RedirectResponse
      */
-    public function update(Request $request)
+    protected function update(Request $request)
     {
         $user_id = $this->auth_user_id;
         $this->validate($request, [
@@ -134,10 +137,11 @@ class ProfileController extends BackendBaseController
                 Rule::unique('Public_Profiles','nickname')->ignore($user_id,'user_id')
             ],
         ]);
+        $slugify = new Slugify();
         $profile = PublicProfile::where('user_id', $this->auth_user_id)->first();
         $profile->name = $request->user_name;
         $profile->lastname = $request->user_lastname;
-        $profile->nickname = $this->slugifiNick($request->user_nickname);
+        $profile->nickname = $slugify->slugString($request->user_nickname);
         $profile->email = $request->user_email;
         $profile->phone =  $request->user_phone;
         $profile->status = $request->user_status == "true" ? true : false;

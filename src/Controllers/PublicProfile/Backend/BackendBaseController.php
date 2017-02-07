@@ -26,15 +26,4 @@ class BackendBaseController extends Controller
         $this->no_feedbacks = "<div class='container'><h1>No comments from your visitors yet</h1></div>";
 
     }
-
-
-    /**
-     * Slugify the provided nickname
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function slugifiNick($string){
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
-    }
-
 }

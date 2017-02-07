@@ -3,7 +3,9 @@
 namespace So2platform\Publicprofile\Controllers\PublicProfile\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use So2platform\Publicprofile\Events\PostsEvent;
 use So2platform\Publicprofile\Helpers\imageUpload;
 use So2platform\Publicprofile\Models\Post;
@@ -16,7 +18,7 @@ class PostController extends BackendBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    protected function create()
     {
         $user_id = $this->auth_user_id;
         $public_profile = PublicProfile::where('user_id', $user_id)->first();
@@ -34,9 +36,9 @@ class PostController extends BackendBaseController
     /**
      * Show the application store.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response | RedirectResponse
      */
-    public function store(Request $request)
+    protected function store(Request $request)
     {
         $this->validate($request, [
             'post_title' => 'required',

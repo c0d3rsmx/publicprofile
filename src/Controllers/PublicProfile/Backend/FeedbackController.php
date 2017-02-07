@@ -19,7 +19,7 @@ class FeedbackController extends BackendBaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    protected function index()
     {
         $public_profile = PublicProfile::where('user_id', $this->auth_user_id )->first();
         if(!empty($public_profile)) {
@@ -47,7 +47,7 @@ class FeedbackController extends BackendBaseController
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function update($feedback_id)
+    protected function update($feedback_id)
     {
         $public_profile = PublicProfile::where('user_id', $this->auth_user_id )->first();
         if(!empty($public_profile)) {
@@ -69,7 +69,7 @@ class FeedbackController extends BackendBaseController
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function destroy($feedback_id)
+    protected function destroy($feedback_id)
     {
         $public_profile = PublicProfile::where('user_id', $this->auth_user_id )->first();
         if(!empty($public_profile)) {

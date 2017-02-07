@@ -15,12 +15,18 @@ return [
     'auth_model_key' => "user_id",
     'auth_guard' => "web",
 
+    /* Public profile backend Home view */
+    'backend_home_view' => 'public_profile',
+
+    /* Public session settings */
+    'public_session_instance' => '',
+
     /* S3 Config */
     's3_public_profile' => [
         'S3_KEY' => '',
         'S3_SECRET' => '',
         'S3_REGION' => '',
-        'S3_BUCKET' => 'https://bucket.s3.amazonaws.com/',
+        'S3_BUCKET' => 'https://{{your-bucket}}.s3.amazonaws.com/',
         'S3_BUCKET_POSTS_DIRECTORY' => '',  // With slash at end.
         'S3_BUCKET_IMAGES_DIRECTORY' => '',  // With slash at end.
         'S3_BUCKET_COVER_DIRECTORY' => '',  // With slash at end.
