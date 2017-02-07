@@ -375,9 +375,9 @@
                 youtube_width: $('#youtube').parent().width()
             },
             ready: function () {
+                this.getPosts();
                 socket.emit('channel', this.channel);
                 socket.emit('channel', this.channel_feedback);
-                this.getPosts();
             },
             watch: {
                 'guest_auth': {
