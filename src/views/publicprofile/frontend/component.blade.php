@@ -176,6 +176,7 @@
 
 
     .animate-in{
+        top: 0;
         animation: getin ease 1s;
         animation-iteration-count: 1;
         transform-origin: 50% 50%;
