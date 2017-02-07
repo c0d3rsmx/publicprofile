@@ -3,5 +3,5 @@
 
 
 @section('content')
-    @include('publicprofile::frontend.component')
+    @include('publicprofile_base::frontend.component')
 @endsection
