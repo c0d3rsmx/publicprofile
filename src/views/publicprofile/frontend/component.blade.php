@@ -285,7 +285,7 @@
                             <div class="post-title">@{{ p.title }} <span>@{{ p.since }}</span></div>
                         </div>
                         <div v-if="p.image != null" class="row">
-                            <img class="post-image" src="{{ config('publicprofile.S3_BUCKET') }}@{{ p.image }}">
+                            <img class="post-image" src="{{ config('publicprofile.s3_public_profile.S3_BUCKET') }}@{{ p.image }}">
                         </div>
                         <div v-if="p.video != null && p.youtube == true" class="row">
                             <youtube :player-width="youtube_width" id="youtube" :video-id="p.video"></youtube>
