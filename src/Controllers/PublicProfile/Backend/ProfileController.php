@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use So2platform\Publicprofile\Events\PostsEvent;
 use So2platform\Publicprofile\Helpers\imageUpload;
 use So2platform\Publicprofile\Helpers\Slugify;
