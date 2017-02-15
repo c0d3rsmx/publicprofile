@@ -1,22 +1,19 @@
 <script src="https://so2cloud.s3.amazonaws.com/public/assets/synergyo2corp/youtube/vue-youtube-embed.js"></script>
+<?php $cover_image = !empty($profile->cover_image) ? $profile->cover_image : '/images/publicprofile/no-cover.png'; ?>
+<?php $profile_image = !empty($profile->profile_image) ? $profile->profile_image : '/images/publicprofile/no-image.jpg'; ?>
 <style>
     body {
         background-color: #e9ebee;
     }
     .cover-image {
-        background-image: url(@if($profile->cover_image == "" || $profile->cover_image == null)
-                 '/images/publicprofile/no-cover.png'
-        @else
-            {{ $profile->cover_image }}
-        @endif
-        );
+        background-image: url('{{$cover_image}}');
         background-size: cover;
         background-repeat: no-repeat;
         height: auto;
         width: 100%;
         }
 
-        .cover-image::before {
+    .cover-image::before {
         content: "";
         width: 100%;
         height: 100%;
@@ -245,11 +242,7 @@
     <div class="row">
         <div class="cover-image col-xs-12 top-profile-big">
             <div class="profile-image-container col-xs-4 col-xs-offset-4 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0">
-                <img class="profile-image img-thumbnail" src="@if($profile->profile_image == '' || $profile->profile_image == null)
-                        /images/publicprofile/no-image.jpg
-                        @else
-                {{ $profile->profile_image }}
-                @endif">
+                <img class="profile-image img-thumbnail" src="{{$profile_image}}">
             </div>
             <div class="profile-name col-xs-12 col-sm-10 col-md-10">
                 <div style="color: white">{{ $profile->name }} {{ $profile->lastname }}</div>
@@ -262,11 +255,7 @@
             <div class="col-md-12 top-profile-content" hidden>
                 <div class="row">
                     <div class="col-xs-12">
-                        <img class="profile-image-small img-thumbnail" src="@if($profile->profile_image == '' || $profile->profile_image == null)
-                                /images/publicprofile/no-image.jpg
-                                @else
-                        {{ $profile->profile_image }}
-                        @endif">
+                        <img class="profile-image-small img-thumbnail" src="{{$profile_image}}">
                         &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->name }} {{ $profile->lastname }}</span>
                         &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->email }}</span>
                         &nbsp;&nbsp;&nbsp;<span style="color: white; font-size: 14px">{{ $profile->phone }}</span>
@@ -286,7 +275,7 @@
                             <div class="post-title">@{{ p.title }} <span>@{{ p.since }}</span></div>
                         </div>
                         <div v-if="p.image != null" class="row">
-                            <img class="post-image" src="{{ config('publicprofile.s3_public_profile.S3_BUCKET') }}@{{ p.image }}">
+                            <img class="post-image" :src="'{{ config('publicprofile.s3_public_profile.S3_BUCKET') }}' + p.image">
                         </div>
                         <div v-if="p.video != null && p.youtube == true" class="row">
                             <youtube :player-width="youtube_width" id="youtube" :video-id="p.video"></youtube>
