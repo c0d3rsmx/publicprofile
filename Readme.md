@@ -8,7 +8,7 @@
 
          
   2. Run 
-            
+            composer require so2platform/publicprofile
             composer require league/flysystem-aws-s3-v3
             composer require predis/predis
             composer require league/flysystem-aws-s3-v3 ~1.0

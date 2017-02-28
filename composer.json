@@ -1,5 +1,5 @@
 {
-    "name": "codersmx/publicprofile",
+    "name": "so2platform/publicprofile",
     "description": "Public Profile for Laravel 5",
     "authors": [
         {
@@ -7,7 +7,7 @@
             "email": "jabg1992@gmail.com"
         }
     ],
-    "version": "1.4.1",
+    "version": "1.4.2",
     "type": "project",
     "autoload": {
         "classmap": [
