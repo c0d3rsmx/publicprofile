@@ -1,13 +1,17 @@
 {
     "name": "so2platform/publicprofile",
     "description": "Public Profile for Laravel 5",
+    "version": "1.4.3",
     "authors": [
         {
             "name": "Juan Becerra",
             "email": "jabg1992@gmail.com"
         }
     ],
-    "version": "1.4.2",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.0"
+    },
     "type": "project",
     "autoload": {
         "classmap": [
