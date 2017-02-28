@@ -13,7 +13,6 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"
                 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
                 crossorigin="anonymous"></script>
-
         <!-- Styles -->
         <style>
             html, body {
@@ -88,16 +87,6 @@
                 -webkit-animation: mymove 5s infinite alternate;
                 z-index: 950;
             }
-
-
-
-
-
-
-
-
-
-
             .raul-img{
                 animation: flying linear 3s;
                 animation-iteration-count: 1;
@@ -152,41 +141,26 @@
                     transform:  translate(-1000px,0px)  scaleX(1.5) ;
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <div id="title-animate">Módulo Perfil Publico</div>
+                    <div id="title-animate">Public Profile</div>
                 </div>
 
                 <div class="links">
-                    <a href="#">Instalar</a>
+                    <a href="{{ route('profile_setup') }}">Instalar</a>
                     <a href="#">Frontend</a>
-                    <a href="#">Backend</a>
-                    <a href="#">Documentacion</a>
-                    <a href="#">GitHub</a>
+                    <a href="{{ route('backend_profile_post_create') }}">Backend</a>
+                    <a href="https://github.com/c0d3rsmx/publicprofile" target="_blank">GitHub</a>
                 </div>
             </div>
             
             
             <img id="raul" class="" src="/img/raul.png">
 
-{{-- 115, 121, 110, 101 114 103 121 111 50--}}
             <script>
                 $("#raul").hide();
                 wordCode = [];

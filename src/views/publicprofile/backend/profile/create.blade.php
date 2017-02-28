@@ -1,4 +1,5 @@
-@extends('publicprofile::backend.layout.app')
+@extends(config('publicprofile.views_to_use').'::backend.layout.app')
+{{-- view extends are customizable --}}
 
 
 

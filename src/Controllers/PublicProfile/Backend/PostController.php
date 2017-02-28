@@ -25,12 +25,12 @@ class PostController extends BackendBaseController
         if(!empty($public_profile)) {
             $public_profile_id = $public_profile->id;
         }else {
-            return view("publicprofile::backend.layout.error", array(
+            return view(config('publicprofile.views_to_use').'::backend.layout.error', array(
                 'error' => $this->missing_profile_html_error
             ));
         }
 
-        return view('publicprofile::backend.post.index', array('public_profile_id' => \Crypt::encrypt($public_profile_id)));
+        return view(config('publicprofile.views_to_use').'::backend.post.index', array('public_profile_id' => \Crypt::encrypt($public_profile_id)));
     }
 
     /**
@@ -90,7 +90,7 @@ class PostController extends BackendBaseController
                         return back()->withErrors([$check]);
                     }
                     $name = $imageup->s3Upload($request->post_image, config('publicprofile.s3_public_profile.S3_BUCKET_POSTS_DIRECTORY'));
-                    $post->image = config('publicprofile.s3_public_profile.S3_BUC   KET').config('publicprofile.s3_public_profile.S3_BUCKET_POSTS_DIRECTORY'). $name;
+                    $post->image = config('publicprofile.s3_public_profile.S3_BUCKET').config('publicprofile.s3_public_profile.S3_BUCKET_POSTS_DIRECTORY'). $name;
                 }
             }
             $post->save();

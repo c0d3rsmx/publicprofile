@@ -59,7 +59,7 @@ class PublicProfileController extends Controller
         }
         $profile_feedbacks['encrypted_id'] = \Crypt::encrypt($profile_feedbacks['id']);
         $profile['encrypted_id'] = \Crypt::encrypt($profile['id']);
-        return view('publicprofile::frontend.index', ['profile' => $profile, 'profile_feedbacks' => $profile_feedbacks]);
+        return view(config('publicprofile.views_to_use').'::frontend.index', ['profile' => $profile, 'profile_feedbacks' => $profile_feedbacks]);
     }
 
     /**

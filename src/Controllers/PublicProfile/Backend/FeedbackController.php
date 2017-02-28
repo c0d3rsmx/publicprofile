@@ -28,16 +28,16 @@ class FeedbackController extends BackendBaseController
         if(!empty($profile_feedback)){
             $feedbacks = Feedback::where('profile_feedback_id', $profile_feedback->id)->get();
             if( $feedbacks->isEmpty() ){
-                return view("publicprofile::backend.layout.error", array(
+                return view(config('publicprofile.views_to_use').'::backend.layout.error', array(
                     'error' => $this->no_feedbacks
                 ));
             }
         } else {
-            return view("publicprofile::backend.layout.error", array(
+            return view(config('publicprofile.views_to_use').'::backend.layout.error', array(
                 'error' => $this->no_feedbacks
             ));
         }
-        return view('publicprofile::backend.feedback.index', array(
+        return view(config('publicprofile.views_to_use').'::backend.feedback.index', array(
             'profile_feedbacks' => $feedbacks,
         ));
     }

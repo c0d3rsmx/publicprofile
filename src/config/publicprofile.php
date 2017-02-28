@@ -8,12 +8,13 @@
 return [
 
     /* Node server url */
-    'node_server' => 'http://cmsmodule.local:3000',
+    'node_server' => 'http://your-app-url:3000', //Feel free to edit socket port. (socket.js)
 
     'default_auth_model_id' => 1,
     'default_public_profile_id' => 1,
     'auth_model_key' => "user_id",
     'auth_guard' => "web",
+    'views_to_use' => 'publicprofile_base',  //"publicprofile" for published ones.
 
     /* Public profile backend Home view */
     'backend_home_view' => 'public_profile',

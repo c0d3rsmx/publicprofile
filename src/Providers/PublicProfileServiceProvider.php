@@ -16,12 +16,12 @@ class PublicProfileServiceProvider extends ServiceProvider
         include __DIR__.'/../routes/publicprofile.php';
         $this->publishes([
             __DIR__.'/../views/publicprofile' => base_path('resources/views/so2platform/publicprofile'),
-            __DIR__.'/../database/migrations' => base_path('database/migrations'),
             __DIR__.'/../routes' => base_path('routes'),
-//            __DIR__.'/../Controllers/PublicProfile' => base_path('app/Http/Controllers/PublicProfile'),
             __DIR__.'/../config' => base_path('config'),
             __DIR__.'/../resources/images' => base_path('public/images'),
         ]);
+        /* Load migrations from base */
+        $this->loadMigrationsFrom( __DIR__.'/../database/migrations');
         /* Load views from base */
         $this->loadViewsFrom(__DIR__.'/../views/publicprofile', 'publicprofile_base');
         /* Load published views */

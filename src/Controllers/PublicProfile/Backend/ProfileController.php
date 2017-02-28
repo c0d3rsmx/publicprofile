@@ -38,7 +38,7 @@ class ProfileController extends BackendBaseController
         if(!empty($public_profile)){
             return redirect()->route('backend_profile_edit', array('profile_id', $public_profile->id));
         }
-        return view('publicprofile::backend.profile.create', array('user_id' => $user_id));
+        return view(config('publicprofile.views_to_use').'::backend.profile.create', array('user_id' => $user_id));
 
     }
 
@@ -112,11 +112,11 @@ class ProfileController extends BackendBaseController
         $user_id = $this->auth_user_id;
         $profile = PublicProfile::where('user_id', $user_id)->first();
         if(empty($profile)){
-            return view("publicprofile::backend.layout.error", array(
+            return view(config('publicprofile.views_to_use').'::backend.layout.error', array(
                 'error' => $this->missing_profile_html_error
             ));
         }
-        return view('publicprofile::backend.profile.edit', array('profile' => $profile));
+        return view(config('publicprofile.views_to_use').'::backend.profile.edit', array('profile' => $profile));
     }
 
     /**

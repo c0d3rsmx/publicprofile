@@ -1,17 +1,18 @@
 {
     "name": "so2platform/publicprofile",
-    "description": "Public Profile for Laravel 5.3",
-    "version": "1.3.8",
+    "description": "Public Profile for Laravel 5",
+    "authors": [
+        {
+            "name": "Juan Becerra",
+            "email": "jabg1992@gmail.com"
+        }
+    ],
+    "version": "1.4.0",
     "type": "project",
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/goetas/serializer.git"
-    }],
-    "require": {
-        "league/flysystem-aws-s3-v3": "^1.0",
-        "predis/predis": "^1.1"
-    },
     "autoload": {
+        "classmap": [
+            "src"
+        ],
         "psr-4": {
             "So2platform\\Publicprofile\\": "src/"
         }

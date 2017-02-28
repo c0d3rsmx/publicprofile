@@ -1,7 +1,8 @@
-@extends('publicprofile::frontend.layout.app')
+@extends(config('publicprofile.views_to_use').'::frontend.layout.app')
+{{-- view extends are customizable --}}
 
 
 
 @section('content')
-    @include('publicprofile_base::frontend.component')
+    @include(config('publicprofile.views_to_use').'::frontend.component')
 @endsection
