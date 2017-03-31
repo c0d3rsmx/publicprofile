@@ -24,9 +24,9 @@ class PublicProfileController extends Controller
     {
 
         /* If there's a active session then get the id from it. */
-        if(!empty(auth(config('publicprofile.auth_guard'))->user())){
+        if( auth()->guard(config('publicprofile.auth_guard'))->check() ){
             // Change session id name.
-            $user_id = auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')];
+            $user_id = auth()->guard(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')];
         }else{
             /* Use your own logic to set the user id to the new post */
             $user_id = config('publicprofile.default_auth_model_id'); // test id.

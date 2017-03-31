@@ -14,9 +14,9 @@ class BackendBaseController extends Controller
 
     function __construct(){
         $this->authguard = config('publicprofile.auth_guard');
-        $this->user_authenticated = auth($this->authguard)->check();
+        $this->user_authenticated = auth()->guard($this->authguard)->check();
         $this->auth_user_id = $this->user_authenticated ?
-                auth(config('publicprofile.auth_guard'))->user()[config('publicprofile.auth_model_key')] :
+                auth()->guard($this->authguard)->user()[config('publicprofile.auth_model_key')] :
                 config('publicprofile.default_auth_model_id') ;
 
         $this->missing_profile_html_error = "<div class='container'> <h4>Profile missing</h4>
