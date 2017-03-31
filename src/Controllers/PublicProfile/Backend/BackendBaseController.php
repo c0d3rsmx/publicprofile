@@ -13,17 +13,19 @@ class BackendBaseController extends Controller
     protected $no_feedbacks;
 
     function __construct(){
-        $this->authguard = config('publicprofile.auth_guard');
-        $this->user_authenticated = auth()->guard($this->authguard)->check();
-        $this->auth_user_id = $this->user_authenticated ?
+        $this->middleware(function($request,$next) {
+            $this->authguard = config('publicprofile.auth_guard');
+            $this->user_authenticated = auth()->guard($this->authguard)->check();
+            $this->auth_user_id = $this->user_authenticated ?
                 auth()->guard($this->authguard)->user()[config('publicprofile.auth_model_key')] :
-                config('publicprofile.default_auth_model_id') ;
+                config('publicprofile.default_auth_model_id');
 
-        $this->missing_profile_html_error = "<div class='container'> <h4>Profile missing</h4>
-        <h1>First create your profile</h1>
-        <a class='btn btn-default' href='".route('backend_profile_create')."'> Click here to create it </a> </div>";
+            $this->missing_profile_html_error = "<div class='container'> <h4>Profile missing</h4>
+            <h1>First create your profile</h1>
+            <a class='btn btn-default' href='" . route('backend_profile_create') . "'> Click here to create it </a> </div>";
 
-        $this->no_feedbacks = "<div class='container'><h1>No comments from your visitors yet</h1></div>";
-
+            $this->no_feedbacks = "<div class='container'><h1>No comments from your visitors yet</h1></div>";
+            return $next($request);
+        });
     }
 }

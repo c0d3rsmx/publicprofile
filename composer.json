@@ -1,7 +1,7 @@
 {
     "name": "so2platform/publicprofile",
     "description": "Public Profile for Laravel 5",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "authors": [
         {
             "name": "Juan Becerra",
