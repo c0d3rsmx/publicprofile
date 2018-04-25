@@ -53,8 +53,8 @@ class ProfileController extends BackendBaseController
         $this->validate($request, [
             'user_name' => 'required',
             'user_lastname' => 'required',
-            'user_email' => 'required|email',
-            'user_phone' => 'required',
+            // 'user_email' => 'required|email',
+            // 'user_phone' => 'required',
             'user_status' => 'required',
             'user_nickname' => 'required|unique:Public_Profiles,nickname',
         ]);
@@ -64,8 +64,8 @@ class ProfileController extends BackendBaseController
             'name' => $request->user_name,
             'lastname' => $request->user_lastname,
             'nickname' => $slugify->slugString($request->user_nickname),
-            'email' => $request->user_email,
-            'phone' => $request->user_phone,
+            'email' => isset($request->user_email) ? $request->user_email : '-',
+            'phone' => isset($request->user_phone) ? $request->user_phone : '-',
             'status' => true
         ]);
         if(isset($request->user_profile_image)){

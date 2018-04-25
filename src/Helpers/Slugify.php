@@ -17,7 +17,8 @@ class Slugify
      * @return String
      */
     function slugString($string){
-        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
+        // return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-',transliterator_transliterate("Any-Latin; NFD; [:Nonspacing Mark:] Remove; NFC; [:Punctuation:] Remove; Lower();", $string))));
+        return strtolower(str_slug(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string))));
     }
 
 }
