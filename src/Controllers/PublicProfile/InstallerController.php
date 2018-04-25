@@ -22,7 +22,7 @@ class InstallerController extends Controller
      * @return void
      */
     function installer(){
-        return view(config('publicprofile.view_to_use').'::index');
+        return view(config('publicprofile.views_to_use').'::index');
     }
 
     /**
